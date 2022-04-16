@@ -84,7 +84,7 @@ def heap_sort_function(input_array):
     exec_time = final_time - init_time
     return sorted_array,exec_time
 
-# Function for partition in Quick sorting
+# Function for partition in Quick sorting using last element as pivot
 def quick_sort_algo(sorted_array,start,end):
     ind = start-1
     pivot = sorted_array[end]
@@ -115,7 +115,9 @@ def quick_sort_3med_algo(sorted_array,start,end):
     med_array = [first_pivot,middle_pivot,last_pivot]
     med_array.sort()
     median = med_array[1]
-    sorted()
+    sorted_array[start] = med_array[0]
+    sorted_array[end] = med_array[1]
+    sorted_array[end//2] = med_array[2]
 
 
 # Function for Quick Sorting using 3 median
@@ -197,8 +199,11 @@ def home_function():
 
                 if selected_algo == "Quicksort3":
                     sorted_array = input_array[:]
-                    sorted_array = quick_sort_3med_function(sorted_array,0,len(sorted_array)-1)
-                    print("Quicksort3 = ",sorted_array)
+                    init_time = time.time()
+                    quick_sort_3med_function(sorted_array,0,len(sorted_array)-1)
+                    final_time = time.time()
+                    exec_time = final_time - init_time
+                    print("Quicksort 3med = ",sorted_array,exec_time)
 
                 if selected_algo == "Insertionsort":
                     sorted_array,exec_time = insertion_sort_function(input_array)
@@ -249,6 +254,13 @@ def compare_function():
                 exec_time = final_time - init_time
                 list_data.append(["Quicksort",exec_time])
 
+                sorted_array = input_array[:]
+                init_time = time.time()
+                quick_sort_3med_function(sorted_array,0,len(sorted_array)-1)
+                final_time = time.time()
+                exec_time = final_time - init_time
+                list_data.append(["Quicksort 3median",exec_time])
+
                 sorted_array,exec_time = insertion_sort_function(input_array)
                 list_data.append(["Insertionsort",exec_time])
 
@@ -258,7 +270,8 @@ def compare_function():
                 sorted_array,exec_time = bubble_sort_function(input_array)
                 list_data.append(["Bubblesort",exec_time])
                 print(list_data)
-                return render_template('barchart.html',data_for_chart=list_data)
+                input_size_string = f"Length of Input array is {array_len}."
+                return render_template('barchart.html',data_for_chart=list_data,input_size_string=input_size_string)
 
         except Exception as e:
             print(e,"Error has occured")
