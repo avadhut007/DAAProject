@@ -1,4 +1,4 @@
-#DAA Project - Sorting Algorithms
+# DAA Project - Sorting Algorithms
 
 -----------------------------------------
  How to Run the Application
